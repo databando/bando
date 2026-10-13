@@ -155,5 +155,5 @@ carries nothing from your database.
 
 ---
 
-<sub>This repository holds no code: it carries the installers, the update feed
-and the issues.</sub>
+<sub>Bando is free to use, and its source is not public. This repository carries
+the installers, the update feed, the issues and the source of the website.</sub>

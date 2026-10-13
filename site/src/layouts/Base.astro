@@ -1,0 +1,71 @@
+---
+import "../styles.css";
+import { messages, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  /** Página sem par no outro idioma (o 404): sem hreflang nem canonical. */
+  standalone?: boolean;
+}
+
+const { locale, title, standalone = false } = Astro.props;
+const t = messages[locale];
+const other = messages[t.other.locale];
+const site = Astro.site!;
+const canonical = new URL(t.path, site).href;
+---
+
+<!doctype html>
+<html lang={t.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {
+      /* O Pages não aceita cabeçalhos próprios, então a CSP vem por aqui.
+         `frame-ancestors` não vale numa <meta> e fica de fora. */
+    }
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f7f7f5" />
+    <title>{title ?? t.title}</title>
+    <meta name="description" content={t.description} />
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    {
+      !standalone && (
+        <>
+          <link rel="canonical" href={canonical} />
+          <link rel="alternate" hreflang={t.lang} href={canonical} />
+          <link rel="alternate" hreflang={other.lang} href={new URL(other.path, site).href} />
+          <link rel="alternate" hreflang="x-default" href={new URL("/", site).href} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={t.brand} />
+          <meta property="og:title" content={t.title} />
+          <meta property="og:description" content={t.description} />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:locale" content={t.lang.replace("-", "_")} />
+          <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              name: t.brand,
+              alternateName: "Bando",
+              applicationCategory: "DeveloperApplication",
+              operatingSystem: "macOS, Windows, Linux",
+              description: t.description,
+              url: canonical,
+            })}
+          />
+        </>
+      )
+    }
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
