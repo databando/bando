@@ -1,0 +1,17 @@
+---
+import Base from "../layouts/Base.astro";
+import { messages } from "../i18n";
+
+// Um 404 só, para os dois idiomas: as duas mensagens, cada uma no seu.
+const en = messages["en-US"];
+const pt = messages["pt-BR"];
+---
+
+<Base locale="en-US" title={`${en.notFound.title} · ${en.brand}`} standalone>
+  <main class="not-found">
+    <span class="logo" aria-hidden="true"></span>
+    <h1>{en.notFound.title}</h1>
+    <p><a href={en.path}>{en.notFound.back}</a></p>
+    <p lang={pt.lang}><a href={pt.path}>{pt.notFound.title} · {pt.notFound.back}</a></p>
+  </main>
+</Base>
