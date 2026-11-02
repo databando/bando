@@ -536,9 +536,8 @@ export type Platform = (typeof platforms)[number]["id"];
 
 export const links = {
   releases: RELEASES,
-  // O instalador de cada sistema. Por ora todos levam à página da última
-  // versão: o `databando/bando` ainda não publicou release, e os nomes dos arquivos
-  // só existem quando houver uma.
+  // O instalador de cada sistema quando a última versão não tem um: a página
+  // do release. Os links diretos são lidos no build (`release.ts`).
   downloads: { macos: RELEASES, windows: RELEASES, linux: RELEASES } satisfies Record<Platform, string>,
   support: "mailto:support@databando.com",
 };
