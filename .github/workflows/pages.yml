@@ -35,7 +35,11 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
+      # O token do Cloudflare Web Analytics (`src/layouts/Base.astro`): sem a
+      # variável, o site sai sem analytics.
       - run: npm run build
+        env:
+          CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site/dist
