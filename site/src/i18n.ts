@@ -114,10 +114,10 @@ const en: SiteMessages = {
   other: { locale: "pt-BR", label: "Português", path: "/pt-br/" },
   title: "bando — Data Workspace",
   description:
-    "Bando is a fast, efficient desktop data IDE: a professional SQL editor, an interactive grid and multi-provider AI in one workspace.",
+    "bando is a fast, efficient desktop data IDE: a professional SQL editor, an interactive grid and multi-provider AI in one workspace.",
   nav: {
     label: "Main navigation",
-    home: "Bando — home",
+    home: "bando — home",
     sections: [
       { id: "features", label: "Features" },
       { id: "experience", label: "Experience" },
@@ -132,14 +132,14 @@ const en: SiteMessages = {
     eyebrow: "A new way to work with data",
     title: ["Less noise.", "More", "discovery."],
     lead: "A desktop data IDE that combines a professional SQL editor, an interactive grid and multi-provider AI. Fast to use, efficient with resources and simple by nature.",
-    download: "Download Bando",
+    download: "Download bando",
     downloadFor: "Download for {os}",
     platform: "Operating system",
     explore: "Explore features",
     notes: ["Native Rust desktop app", "Light and responsive"],
   },
   preview: {
-    label: "Illustrative preview of the Bando interface",
+    label: "Illustrative preview of the bando interface",
     run: "Run",
     results: "Results",
     rows: "1,248 rows",
@@ -154,7 +154,7 @@ const en: SiteMessages = {
     ready: "Ready · 42 ms",
     tag: "Interactive grid",
     tagLine: "Explore. Combine. Discover.",
-    carousel: "Bando screens",
+    carousel: "bando screens",
     screens: {
       editor: { tab: "Editor", alt: "The SQL editor with a query that joins customers, countries and orders, and its results in the grid below" },
       chart: { tab: "Chart", alt: "A query's result drawn as a bar chart of monthly revenue" },
@@ -167,7 +167,7 @@ const en: SiteMessages = {
   features: {
     eyebrow: "Built for real work",
     title: ["Power where it matters.", "Simplicity everywhere."],
-    lead: "Bando brings the tools you use every day into one straightforward environment, without turning every task into a configuration project.",
+    lead: "bando brings the tools you use every day into one straightforward environment, without turning every task into a configuration project.",
     cards: [
       {
         title: "Native performance",
@@ -196,7 +196,7 @@ const en: SiteMessages = {
     ],
     wide: {
       title: "One flow. Fewer tools in the way.",
-      body: "From SQL to result, from exploration to comparison: Bando connects the steps so you stay focused on the problem, not on switching apps.",
+      body: "From SQL to result, from exploration to comparison: bando connects the steps so you stay focused on the problem, not on switching apps.",
     },
   },
   showcase: {
@@ -283,7 +283,7 @@ const en: SiteMessages = {
     stack: {
       eyebrow: "Choose your stack",
       title: "Your model. Your flow.",
-      body: "Bando acts as a gateway to the providers you configure. The flexibility to choose models and adapt how you use AI to your needs.",
+      body: "bando acts as a gateway to the providers you configure. The flexibility to choose models and adapt how you use AI to your needs.",
       others: "Other compatible providers",
     },
     audit: {
@@ -304,7 +304,7 @@ const en: SiteMessages = {
     eyebrow: "One environment",
     title: ["Your databases.", "One workspace."],
     body: "Work with relational and non-relational technologies without fragmenting your flow. MariaDB, TimescaleDB, TiDB, YugabyteDB and other compatible databases can also be part of your environment, depending on the available drivers.",
-    button: "Discover Bando",
+    button: "Discover bando",
   },
   footer: {
     tagline: "DATA WORKSPACE",
@@ -322,10 +322,10 @@ const pt: SiteMessages = {
   other: { locale: "en-US", label: "English", path: "/" },
   title: "bando — Data Workspace",
   description:
-    "Bando — uma IDE de dados desktop, rápida e eficiente. Editor SQL profissional, grid interativo e IA multiprovedor em um único workspace.",
+    "bando — uma IDE de dados desktop, rápida e eficiente. Editor SQL profissional, grid interativo e IA multiprovedor em um único workspace.",
   nav: {
     label: "Navegação principal",
-    home: "Bando — início",
+    home: "bando — início",
     sections: [
       { id: "recursos", label: "Recursos" },
       { id: "experiencia", label: "Experiência" },
@@ -340,14 +340,14 @@ const pt: SiteMessages = {
     eyebrow: "Uma nova forma de trabalhar com dados",
     title: ["Menos ruído.", "Mais", "descoberta."],
     lead: "Uma IDE de dados desktop que combina editor SQL profissional, grid interativo e IA multiprovedor. Rápida no uso, eficiente nos recursos e simples por natureza.",
-    download: "Baixar Bando",
+    download: "Baixar bando",
     downloadFor: "Baixar para {os}",
     platform: "Sistema operacional",
     explore: "Explorar recursos",
     notes: ["Desktop nativo em Rust", "Leve e responsivo"],
   },
   preview: {
-    label: "Prévia ilustrativa da interface do Bando",
+    label: "Prévia ilustrativa da interface do bando",
     run: "Executar",
     results: "Resultados",
     rows: "1.248 linhas",
@@ -362,7 +362,7 @@ const pt: SiteMessages = {
     ready: "Pronto · 42 ms",
     tag: "Grid interativo",
     tagLine: "Explore. Combine. Descubra.",
-    carousel: "Telas do Bando",
+    carousel: "Telas do bando",
     screens: {
       editor: { tab: "Editor", alt: "O editor SQL com uma consulta que junta clientes, países e pedidos, e o resultado no grid abaixo" },
       chart: { tab: "Gráfico", alt: "O resultado de uma consulta desenhado como gráfico de barras da receita por mês" },
@@ -375,7 +375,7 @@ const pt: SiteMessages = {
   features: {
     eyebrow: "Feito para o trabalho real",
     title: ["Potência onde importa.", "Simplicidade em tudo."],
-    lead: "O Bando reúne as ferramentas que você usa todos os dias em um ambiente direto, sem transformar cada tarefa em um projeto de configuração.",
+    lead: "O bando reúne as ferramentas que você usa todos os dias em um ambiente direto, sem transformar cada tarefa em um projeto de configuração.",
     cards: [
       {
         title: "Performance nativa",
@@ -404,7 +404,7 @@ const pt: SiteMessages = {
     ],
     wide: {
       title: "Um fluxo. Menos ferramentas no caminho.",
-      body: "Do SQL ao resultado, da exploração à comparação: o Bando conecta as etapas para você manter o foco no problema, não na troca de aplicativos.",
+      body: "Do SQL ao resultado, da exploração à comparação: o bando conecta as etapas para você manter o foco no problema, não na troca de aplicativos.",
     },
   },
   showcase: {
@@ -491,7 +491,7 @@ const pt: SiteMessages = {
     stack: {
       eyebrow: "Escolha seu stack",
       title: "Seu modelo. Seu fluxo.",
-      body: "O Bando atua como gateway para provedores configurados por você. Flexibilidade para escolher modelos e adaptar o uso da IA às suas necessidades.",
+      body: "O bando atua como gateway para provedores configurados por você. Flexibilidade para escolher modelos e adaptar o uso da IA às suas necessidades.",
       others: "Outros compatíveis",
     },
     audit: {
@@ -512,7 +512,7 @@ const pt: SiteMessages = {
     eyebrow: "Um só ambiente",
     title: ["Seus bancos.", "Um só workspace."],
     body: "Trabalhe com tecnologias relacionais e não relacionais sem fragmentar seu fluxo. MariaDB, TimescaleDB, TiDB, YugabyteDB e outros bancos compatíveis também podem fazer parte do seu ambiente, conforme os drivers disponíveis.",
-    button: "Conhecer o Bando",
+    button: "Conhecer o bando",
   },
   footer: {
     tagline: "DATA WORKSPACE",
