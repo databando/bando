@@ -109,10 +109,10 @@ export interface SiteMessages {
 
 const en: SiteMessages = {
   lang: "en",
-  brand: "DataBando",
+  brand: "bando",
   path: "/",
   other: { locale: "pt-BR", label: "Português", path: "/pt-br/" },
-  title: "DataBando — Data Workspace",
+  title: "bando — Data Workspace",
   description:
     "Bando is a fast, efficient desktop data IDE: a professional SQL editor, an interactive grid and multi-provider AI in one workspace.",
   nav: {
@@ -317,10 +317,10 @@ const en: SiteMessages = {
 
 const pt: SiteMessages = {
   lang: "pt-BR",
-  brand: "Bando de Dados",
+  brand: "bando",
   path: "/pt-br/",
   other: { locale: "en-US", label: "English", path: "/" },
-  title: "Bando de Dados — Data Workspace",
+  title: "bando — Data Workspace",
   description:
     "Bando — uma IDE de dados desktop, rápida e eficiente. Editor SQL profissional, grid interativo e IA multiprovedor em um único workspace.",
   nav: {
