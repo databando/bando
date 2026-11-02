@@ -14,6 +14,23 @@ const t = messages[locale];
 const other = messages[t.other.locale];
 const site = Astro.site!;
 const canonical = new URL(t.path, site).href;
+
+// Cloudflare Web Analytics: sem cookies, então sem aviso de consentimento.
+// O token é o do site no painel da Cloudflare e chega pelo build
+// (`CF_BEACON_TOKEN`, variável do repositório lida em `pages.yml`); sem ele
+// a página sai sem o script, e a CSP sem as duas origens que ele usa.
+const beaconToken = process.env.CF_BEACON_TOKEN;
+const csp = [
+  "default-src 'self'",
+  beaconToken && "script-src 'self' https://static.cloudflareinsights.com",
+  beaconToken && "connect-src 'self' https://cloudflareinsights.com",
+  "img-src 'self' data:",
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'none'",
+]
+  .filter(Boolean)
+  .join("; ");
 ---
 
 <!doctype html>
@@ -25,10 +42,7 @@ const canonical = new URL(t.path, site).href;
       /* O Pages não aceita cabeçalhos próprios, então a CSP vem por aqui.
          `frame-ancestors` não vale numa <meta> e fica de fora. */
     }
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'"
-    />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="color-scheme" content="light" />
     <meta name="theme-color" content="#f7f7f5" />
@@ -67,5 +81,15 @@ const canonical = new URL(t.path, site).href;
   </head>
   <body>
     <slot />
+    {
+      beaconToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: beaconToken })}
+        />
+      )
+    }
   </body>
 </html>
