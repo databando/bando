@@ -14,6 +14,7 @@ import ollama from "../assets/providers/ollama.svg";
 import openai from "../assets/providers/openai.svg";
 import openrouter from "../assets/providers/openrouter.svg";
 import { links, messages, platforms, type Locale } from "../i18n";
+import { latestDownloads } from "../release";
 
 interface Props {
   locale: Locale;
@@ -23,6 +24,7 @@ const { locale } = Astro.props;
 const t = messages[locale];
 const other = messages[t.other.locale];
 const year = new Date().getFullYear();
+const downloads = await latestDownloads();
 const [features, experience, ai, connections] = t.nav.sections.map((section) => section.id);
 const kinds = t.connections.kinds;
 const databases = [
@@ -57,6 +59,17 @@ const screens = Object.entries(screenFiles)
     if (!text) throw new Error(`preview.screens.${key} falta no catálogo ${locale}`);
     return { key, image: module.default, ...text };
   });
+// A tela de cada passo de "Do código à descoberta": `assets/steps/`, na ordem
+// do nome do arquivo (`01-query.png`, `02-explore.png`…), uma por passo, com o
+// texto alternativo em `showcase.steps[i].shot`. Com elas os passos viram abas
+// e o painel mostra a tela do escolhido; sem elas, fica o painel de exemplo.
+const stepFiles = import.meta.glob<{ default: ImageMetadata }>("../assets/steps/*.{png,jpg,jpeg,webp}", { eager: true });
+const stepShots = Object.entries(stepFiles)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, module]) => module.default);
+if (stepShots.length > 0 && stepShots.length !== t.showcase.steps.length) {
+  throw new Error(`assets/steps/ tem ${stepShots.length} telas para ${t.showcase.steps.length} passos`);
+}
 ---
 
 <Base locale={locale}>
@@ -103,7 +116,7 @@ const screens = Object.entries(screenFiles)
                 <select aria-label={t.hero.platform}>
                   {
                     platforms.map(({ id, name }) => (
-                      <option value={id} data-href={links.downloads[id]}>
+                      <option value={id} data-href={downloads[id]}>
                         {name}
                       </option>
                     ))
@@ -275,20 +288,55 @@ const screens = Object.entries(screenFiles)
           <p>{t.showcase.lead}</p>
         </div>
         <div class="showcase-layout">
-          <div class="steps">
-            {
-              t.showcase.steps.map((step, i) => (
-                <div class="step">
-                  <div class="step-num">{String(i + 1).padStart(2, "0")}</div>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.body}</p>
-                  </div>
+          {
+            stepShots.length > 0 ? (
+              <>
+                <div class="steps step-tabs" role="tablist" aria-label={t.showcase.stepsLabel}>
+                  {t.showcase.steps.map((step, i) => (
+                    <div class="step">
+                      <div class="step-num">{String(i + 1).padStart(2, "0")}</div>
+                      <div>
+                        <h3>
+                          <button
+                            class="step-tab"
+                            type="button"
+                            role="tab"
+                            id={`step-tab-${i}`}
+                            aria-controls={`step-shot-${i}`}
+                            aria-selected={String(i === 0)}
+                            tabindex={i === 0 ? 0 : -1}
+                          >
+                            {step.title}
+                          </button>
+                        </h3>
+                        <p>{step.body}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))
-            }
-          </div>
-          <div class="demo-panel">
+                <div class="demo-panel step-shots">
+                  {stepShots.map((image, i) => (
+                    <div class="step-shot" role="tabpanel" id={`step-shot-${i}`} aria-labelledby={`step-tab-${i}`} hidden={i !== 0}>
+                      <Image src={image} alt={t.showcase.steps[i].shot} widths={[720, 1080, 1440]} sizes="(max-width: 920px) 100vw, 680px" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div class="steps">
+                {t.showcase.steps.map((step, i) => (
+                  <div class="step">
+                    <div class="step-num">{String(i + 1).padStart(2, "0")}</div>
+                    <div>
+                      <h3>{step.title}</h3>
+                      <p>{step.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          }
+          {stepShots.length === 0 && <div class="demo-panel">
             <div class="demo-toolbar">
               <span>◈ &nbsp; {t.showcase.panel}</span>
               <div class="demo-tabs" role="tablist" aria-label={t.showcase.tabsLabel}>
@@ -325,7 +373,7 @@ const screens = Object.entries(screenFiles)
                 </div>
               ))
             }
-          </div>
+          </div>}
         </div>
       </div>
     </section>
@@ -525,6 +573,31 @@ const screens = Object.entries(screenFiles)
       }),
     );
   }
+
+  // Os passos com tela: a aba escolhida mostra a sua, e as setas andam entre
+  // elas, como no carrossel do topo.
+  const stepTabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".step-tab"));
+  const pick = (index: number) =>
+    stepTabs.forEach((tab, i) => {
+      const selected = i === index;
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      tab.closest(".step")?.classList.toggle("active", selected);
+      const panel = document.getElementById(tab.getAttribute("aria-controls") ?? "");
+      if (panel) panel.hidden = !selected;
+    });
+  stepTabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => pick(i));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = (i + step + stepTabs.length) % stepTabs.length;
+      pick(next);
+      stepTabs[next].focus();
+    });
+  });
+  if (stepTabs.length > 0) pick(0);
 
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".demo-tab"));
   for (const tab of tabs) {

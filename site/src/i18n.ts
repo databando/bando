@@ -76,7 +76,13 @@ export interface SiteMessages {
     eyebrow: string;
     title: [string, string];
     lead: string;
-    steps: { title: string; body: string }[];
+    /**
+     * Cada passo, e o texto alternativo da sua tela em `assets/steps/`
+     * (`01-query.png` é a do primeiro passo).
+     */
+    steps: { title: string; body: string; shot: string }[];
+    /** O nome da lista de passos, lido pelo leitor de tela quando há telas. */
+    stepsLabel: string;
     panel: string;
     tabsLabel: string;
     demos: Demo[];
@@ -149,7 +155,13 @@ const en: SiteMessages = {
     tag: "Interactive grid",
     tagLine: "Explore. Combine. Discover.",
     carousel: "Bando screens",
-    screens: {},
+    screens: {
+      editor: { tab: "Editor", alt: "The SQL editor with a query that joins customers, countries and orders, and its results in the grid below" },
+      chart: { tab: "Chart", alt: "A query's result drawn as a bar chart of monthly revenue" },
+      diagram: { tab: "Diagram", alt: "The entity-relationship diagram of a shop's tables and the keys between them" },
+      production: { tab: "Production", alt: "An UPDATE without WHERE on a production connection, held for confirmation before it runs" },
+      presentation: { tab: "Presenting", alt: "The results grid in presentation mode, with the e-mail column masked" },
+    },
   },
   proof: "One workspace for different technologies.",
   features: {
@@ -192,11 +204,28 @@ const en: SiteMessages = {
     title: ["Your result is where", "the work begins."],
     lead: "Run a query and keep exploring. The interactive grid is part of the flow — not just an output screen.",
     steps: [
-      { title: "Query", body: "Write SQL in an editor designed to keep code readable and context close at hand." },
-      { title: "Explore", body: "Investigate values with filters, sorting and grouping right in the grid." },
-      { title: "Combine", body: "Cross results from different sources and compare sets to find differences." },
-      { title: "Share the result", body: "Export the data and take your analysis to the next step of your work." },
+      {
+        title: "Query",
+        body: "Write SQL in an editor designed to keep code readable and context close at hand.",
+        shot: "The SQL editor with a formatted query that counts products and stock by category, and its result in the grid below",
+      },
+      {
+        title: "Explore",
+        body: "Investigate values with filters, sorting and grouping right in the grid.",
+        shot: "The results grid sorted by total, with the country column's filter open and how many orders each country has",
+      },
+      {
+        title: "Combine",
+        body: "Cross results from different sources and compare sets to find differences.",
+        shot: "The same products query on the development and production connections, compared: 65 rows the same, 6 different and one only on each side",
+      },
+      {
+        title: "Share the result",
+        body: "Export the data and take your analysis to the next step of your work.",
+        shot: "The grid's export menu: CSV, JSON, Parquet, Excel and SQL INSERT, or saved as a routine",
+      },
     ],
+    stepsLabel: "The steps, each with its screen",
     panel: "Explore result",
     tabsLabel: "Feature examples",
     demos: [
@@ -334,7 +363,13 @@ const pt: SiteMessages = {
     tag: "Grid interativo",
     tagLine: "Explore. Combine. Descubra.",
     carousel: "Telas do Bando",
-    screens: {},
+    screens: {
+      editor: { tab: "Editor", alt: "O editor SQL com uma consulta que junta clientes, países e pedidos, e o resultado no grid abaixo" },
+      chart: { tab: "Gráfico", alt: "O resultado de uma consulta desenhado como gráfico de barras da receita por mês" },
+      diagram: { tab: "Diagrama", alt: "O diagrama entidade-relacionamento das tabelas de uma loja e as chaves entre elas" },
+      production: { tab: "Produção", alt: "Um UPDATE sem WHERE numa conexão de produção, retido para confirmação antes de rodar" },
+      presentation: { tab: "Apresentação", alt: "O grid de resultados no modo apresentação, com a coluna de e-mail mascarada" },
+    },
   },
   proof: "Um workspace para diferentes tecnologias.",
   features: {
@@ -377,11 +412,28 @@ const pt: SiteMessages = {
     title: ["Seu resultado é o", "começo do trabalho."],
     lead: "Execute uma consulta e continue explorando. O grid interativo faz parte do fluxo — não é só uma tela de saída.",
     steps: [
-      { title: "Consulte", body: "Escreva SQL em um editor projetado para manter o código legível e o contexto por perto." },
-      { title: "Explore", body: "Investigue valores com filtros, ordenação e agrupamentos diretamente no grid." },
-      { title: "Combine", body: "Cruze resultados de fontes diferentes e compare conjuntos para encontrar diferenças." },
-      { title: "Compartilhe o resultado", body: "Exporte os dados e leve sua análise para o próximo passo do trabalho." },
+      {
+        title: "Consulte",
+        body: "Escreva SQL em um editor projetado para manter o código legível e o contexto por perto.",
+        shot: "O editor SQL com uma consulta formatada que conta produtos e estoque por categoria, e o resultado no grid abaixo",
+      },
+      {
+        title: "Explore",
+        body: "Investigue valores com filtros, ordenação e agrupamentos diretamente no grid.",
+        shot: "O grid de resultados ordenado pelo total, com o filtro da coluna de país aberto e quantos pedidos tem cada país",
+      },
+      {
+        title: "Combine",
+        body: "Cruze resultados de fontes diferentes e compare conjuntos para encontrar diferenças.",
+        shot: "A mesma consulta de produtos nas conexões de desenvolvimento e de produção, comparada: 65 linhas iguais, 6 diferentes e uma só de cada lado",
+      },
+      {
+        title: "Compartilhe o resultado",
+        body: "Exporte os dados e leve sua análise para o próximo passo do trabalho.",
+        shot: "O menu de exportar do grid: CSV, JSON, Parquet, Excel e SQL INSERT, ou salvo como rotina",
+      },
     ],
+    stepsLabel: "Os passos, cada um com a sua tela",
     panel: "Explorar resultado",
     tabsLabel: "Exemplos de recursos",
     demos: [
@@ -484,9 +536,8 @@ export type Platform = (typeof platforms)[number]["id"];
 
 export const links = {
   releases: RELEASES,
-  // O instalador de cada sistema. Por ora todos levam à página da última
-  // versão: o `databando/bando` ainda não publicou release, e os nomes dos arquivos
-  // só existem quando houver uma.
+  // O instalador de cada sistema quando a última versão não tem um: a página
+  // do release. Os links diretos são lidos no build (`release.ts`).
   downloads: { macos: RELEASES, windows: RELEASES, linux: RELEASES } satisfies Record<Platform, string>,
   support: "mailto:support@databando.com",
 };
