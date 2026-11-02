@@ -1,11 +1,11 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/bando-mark-dark.svg">
-    <img src="assets/bando-mark-light.svg" alt="Bando" width="320" max-width="100%">
+    <img src="assets/bando-mark-light.svg" alt="bando" width="320" max-width="100%">
   </picture>
 </p>
 
-<h1 align="center">Bando · Data Workspace</h1>
+<h1 align="center">bando · Data Workspace</h1>
 
 <p align="center">
   A fast, native app: connect to your databases, write SQL, and keep working with the answer —
@@ -21,15 +21,15 @@
 </p>
 
 <p align="center">
-  <img src="assets/screenshots/hero.png" alt="Bando: a formatted SQL query joining three tables, and its 2,400-row result in the grid" width="880">
+  <img src="assets/screenshots/hero.png" alt="bando: a formatted SQL query joining three tables, and its 2,400-row result in the grid" width="880">
 </p>
 
 ---
 
-## Why Bando
+## Why bando
 
 **A native app, not a browser in a box.** The core is Rust and the window is
-Tauri, so Bando starts like a tool and not like a server. Measured on Apple
+Tauri, so bando starts like a tool and not like a server. Measured on Apple
 Silicon: **a painted window in 0.4 s** and **about 100 MB of memory at rest**.
 A million rows materialize in **a quarter of a second with a 31 MB peak**,
 because a large result spills to disk instead of growing in memory.
@@ -77,7 +77,7 @@ anything writes. Every session runs under a token and cost budget you set.
 | **History** | Every run is kept, and any of them goes back into the editor — as its own query, as the script it came from, or into the tab in front. |
 | **Views and routines** | Edit a definition in its own tab and apply it after a side-by-side review against what is on the server now. |
 | **Presentation mode** | Masks personal data — e-mails, phone and card numbers, CPF and CNPJ, credentials, and any column you name — in the grid, copies, exports, reports and the assistant, before you share your screen. |
-| **MCP, both ways** | `bando mcp serve` gives your own agent read-only tools on one connection. Other MCP servers plug into Bando's assistant, each approved by the command line it runs. |
+| **MCP, both ways** | `bando mcp serve` gives your own agent read-only tools on one connection. Other MCP servers plug into bando's assistant, each approved by the command line it runs. |
 | **Projects** | A project is a folder. Connection definitions and scripts can go into Git; passwords and history stay on your machine. |
 | **Connectivity** | SSH tunnels through your own `ssh` and its config, TLS, client certificates. |
 | **Your look** | VS Code color themes, imported as they are. English and Portuguese (Brazil). |
@@ -98,14 +98,14 @@ blocked client mid-run, not most commands.
 
 - **No telemetry.** No usage counters, no crash uploads — there is nowhere for
   them to go.
-- **Bando talks to your databases, the AI provider you chose, and this
+- **bando talks to your databases, the AI provider you chose, and this
   repository** — once per launch, to ask whether there is a newer version. You
   can switch that off.
 - **Nothing about a connection reaches a model until you allow it for that
   connection** — the schema and the values are two separate permissions, and
   both start off.
 - **Passwords stay out of what you share.** A project's connection definitions
-  can go into Git; the passwords live in a separate local file that Bando keeps
+  can go into Git; the passwords live in a separate local file that bando keeps
   out of commits, and they never enter a connection string or the window.
 - **Feedback leaves only through your own browser**, as an issue you read before
   you send it.
@@ -136,7 +136,7 @@ already exists.
 
 ## How updating works
 
-Bando asks this repository, once per launch, whether a newer version shipped.
+bando asks this repository, once per launch, whether a newer version shipped.
 When one has, it says so in a toast with a button and **waits for you to say
 yes**. It never replaces the application under somebody who is in the middle of
 an open transaction against a production database.
@@ -149,11 +149,11 @@ in Settings, and the *Check for updates* button stays either way.
 
 ## Problems
 
-Open an [issue](../../issues). If Bando showed you an error ID — something like
+Open an [issue](../../issues). If bando showed you an error ID — something like
 `syntax_error-a1b2c3` — paste it in. It is what locates the problem, and it
 carries nothing from your database.
 
 ---
 
-<sub>Bando is free to use, and its source is not public. This repository carries
+<sub>bando is free to use, and its source is not public. This repository carries
 the installers, the update feed, the issues and the source of the website.</sub>
