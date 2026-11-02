@@ -35,7 +35,11 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
+      # O token só para a API não limitar a consulta do último release
+      # (`src/release.ts`).
       - run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site/dist

@@ -14,6 +14,7 @@ import ollama from "../assets/providers/ollama.svg";
 import openai from "../assets/providers/openai.svg";
 import openrouter from "../assets/providers/openrouter.svg";
 import { links, messages, platforms, type Locale } from "../i18n";
+import { latestDownloads } from "../release";
 
 interface Props {
   locale: Locale;
@@ -23,6 +24,7 @@ const { locale } = Astro.props;
 const t = messages[locale];
 const other = messages[t.other.locale];
 const year = new Date().getFullYear();
+const downloads = await latestDownloads();
 const [features, experience, ai, connections] = t.nav.sections.map((section) => section.id);
 const kinds = t.connections.kinds;
 const databases = [
@@ -103,7 +105,7 @@ const screens = Object.entries(screenFiles)
                 <select aria-label={t.hero.platform}>
                   {
                     platforms.map(({ id, name }) => (
-                      <option value={id} data-href={links.downloads[id]}>
+                      <option value={id} data-href={downloads[id]}>
                         {name}
                       </option>
                     ))
