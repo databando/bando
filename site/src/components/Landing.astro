@@ -575,10 +575,17 @@ if (stepShots.length > 0 && stepShots.length !== t.showcase.steps.length) {
   }
 
   // Os passos com tela: a aba escolhida mostra a sua, e as setas andam entre
-  // elas, como no carrossel do topo.
+  // elas, como no carrossel do topo. A troca automática também é a mesma: a
+  // barra que enche sobre o passo ativo (`step-timer` em styles.css) chama o
+  // próximo. Para no primeiro toque, clique ou tecla, pausa com o mouse ou o
+  // foco em cima e fora da tela, para quem chega à seção ver a volta desde o
+  // primeiro passo, e não existe para quem pede menos movimento.
   const stepTabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".step-tab"));
+  const stepLayout = stepTabs[0]?.closest<HTMLElement>(".showcase-layout");
+  let currentStep = 0;
   const pick = (index: number) =>
     stepTabs.forEach((tab, i) => {
+      if (i === index) currentStep = i;
       const selected = i === index;
       tab.setAttribute("aria-selected", String(selected));
       tab.tabIndex = selected ? 0 : -1;
@@ -598,6 +605,25 @@ if (stepShots.length > 0 && stepShots.length !== t.showcase.steps.length) {
     });
   });
   if (stepTabs.length > 0) pick(0);
+
+  if (stepLayout && stepTabs.length > 1 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let hovered = false;
+    let visible = false;
+    const sync = () => stepLayout.classList.toggle("paused", hovered || !visible || stepLayout.contains(document.activeElement));
+    stepLayout.classList.add("autoplay", "paused");
+    const stop = () => stepLayout.classList.remove("autoplay");
+    for (const type of ["pointerdown", "keydown"]) stepLayout.addEventListener(type, stop, { passive: true });
+    stepLayout.addEventListener("mouseenter", () => ((hovered = true), sync()));
+    stepLayout.addEventListener("mouseleave", () => ((hovered = false), sync()));
+    stepLayout.addEventListener("focusin", sync);
+    stepLayout.addEventListener("focusout", () => setTimeout(sync));
+    new IntersectionObserver(([entry]) => ((visible = entry.isIntersecting), sync()), { threshold: 0.4 }).observe(stepLayout);
+    stepLayout.addEventListener("animationend", (event) => {
+      if (event.animationName === "step-timer" && stepLayout.classList.contains("autoplay")) {
+        pick((currentStep + 1) % stepTabs.length);
+      }
+    });
+  }
 
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".demo-tab"));
   for (const tab of tabs) {
